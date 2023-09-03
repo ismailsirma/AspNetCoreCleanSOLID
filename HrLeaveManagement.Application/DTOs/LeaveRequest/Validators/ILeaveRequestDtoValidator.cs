@@ -6,10 +6,10 @@ using System.Text;
 
 namespace HrLeaveManagement.Application.DTOs.LeaveRequest.Validators
 {
-    public class ILeaveAllocationDtoValidator : AbstractValidator<ILeaveRequestDto>
+    public class ILeaveRequestDtoValidator : AbstractValidator<ILeaveRequestDto>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
-        public ILeaveAllocationDtoValidator(ILeaveRequestRepository leaveRequestRepository)
+        public ILeaveRequestDtoValidator(ILeaveRequestRepository leaveRequestRepository)
         {
             _leaveRequestRepository = leaveRequestRepository;
             RuleFor(p => p.StartDate)
