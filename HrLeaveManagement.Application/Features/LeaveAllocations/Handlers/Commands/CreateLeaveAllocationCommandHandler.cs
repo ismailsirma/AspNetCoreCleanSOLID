@@ -7,10 +7,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using HrLeaveManagement.Application.DTOs.LeaveAllocation.Validators;
+using HrLeaveManagement.Application.Features.LeaveAllocations.Requests.Commands;
+using HrLeaveManagement.Application.Exceptions;
 
 namespace HrLeaveManagement.Application.Features.LeaveAllocations.Handlers.Commands
 {
-    internal class CreateLeaveAllocationCommandHandler : IRequestHandler<LeaveRequests.Requests.Commands.CreateLeaveTypeCommand, int>
+    internal class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAllocationCommand, int>
     {
         private readonly ILeaveAllocationRepository _leaveAllocationRepository;
         private readonly IMapper _mapper;
@@ -19,10 +22,17 @@ namespace HrLeaveManagement.Application.Features.LeaveAllocations.Handlers.Comma
             _leaveAllocationRepository = leaveAllocationRepository;
             _mapper = mapper;
         }
-        public async Task<int> Handle(LeaveRequests.Requests.Commands.CreateLeaveTypeCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateLeaveAllocationCommand request, CancellationToken cancellationToken)
         {
-            var leaveAllocation = _mapper.Map<LeaveAllocation>(request.LeaveTypeDto);
+            var validator = new CreateLeaveAllocationDtoValidator(_leaveAllocationRepository);
+            var validationResult = await validator.ValidateAsync(request.LeaveAllocationDto);
+
+            if (!validationResult.IsValid == false)
+                throw new ValidationException(validationResult);
+
+            var leaveAllocation = _mapper.Map<LeaveAllocation>(request.LeaveAllocationDto);
             leaveAllocation = await _leaveAllocationRepository.Add(leaveAllocation);
+
             return leaveAllocation.Id;
         }
     }

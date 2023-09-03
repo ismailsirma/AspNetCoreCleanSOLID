@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace HrLeaveManagement.Application.Features.LeaveRequests.Handlers.Queries
 {
-    public class GetLeaveRequestsListRequestHandler : IRequestHandler<GetLeaveRequestListRequest, List<LeaveRequestDto>>
+    public class GetLeaveRequestsListRequestHandler : IRequestHandler<GetLeaveRequestListRequest, List<LeaveRequestListDto>>
     {
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly IMapper _mapper;
@@ -22,10 +22,10 @@ namespace HrLeaveManagement.Application.Features.LeaveRequests.Handlers.Queries
             _mapper = mapper;
         }
 
-        public async Task<List<LeaveRequestDto>> Handle(GetLeaveRequestListRequest request, CancellationToken cancellationToken)
+        public async Task<List<LeaveRequestListDto>> Handle(GetLeaveRequestListRequest request, CancellationToken cancellationToken)
         {
             var leaveRequests = await _leaveRequestRepository.GetLeaveRequestsWithDetails();
-            return _mapper.Map<List<LeaveRequestDto>>(leaveRequests);
+            return _mapper.Map<List<LeaveRequestListDto>>(leaveRequests);
         }
     }
 }

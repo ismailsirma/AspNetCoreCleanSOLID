@@ -1,17 +1,21 @@
 ﻿using AutoMapper;
 using HrLeaveManagement.Application.DTOs.LeaveType.Validators;
+using HrLeaveManagement.Application.Exceptions;
+using HrLeaveManagement.Application.Features.LeaveRequests.Requests.Commands;
 using HrLeaveManagement.Application.Persistence.Contracts;
+using HrLeaveManagement.Application.Responses;
 using HrLeaveManagement.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace HrLeaveManagement.Application.Features.LeaveTypes.Handlers.Commands
 {
-    public class CreateLeaveTypeCommandHandler : IRequestHandler<LeaveRequests.Requests.Commands.CreateLeaveTypeCommand, int>
+    public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeCommand, BaseCommandResponse>
     {
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         private readonly IMapper _mapper;
@@ -20,17 +24,28 @@ namespace HrLeaveManagement.Application.Features.LeaveTypes.Handlers.Commands
             _leaveTypeRepository = leaveTypeRepository;
             _mapper = mapper;
         }
-        public async Task<int> Handle(LeaveRequests.Requests.Commands.CreateLeaveTypeCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
         {
+            var response = new BaseCommandResponse();
             var validator = new CreateLeaveTypeDtoValidator();
             var validationResult = await validator.ValidateAsync(request.LeaveTypeDto);
             
             if (validationResult.IsValid == false)
-                throw new Exception();
+            {
+                response.Success = false;
+                response.Message = "Creation Failed";
+                response.Errors = validationResult.Errors.Select(q => q.ErrorMessage).ToList();
+                //throw new ValidationException(validationResult);
+                return response;
+            }
 
             var leaveType = _mapper.Map<LeaveType>(request.LeaveTypeDto);
             leaveType = await _leaveTypeRepository.Add(leaveType);
-            return leaveType.Id;
+
+            response.Success = true;
+            response.Message = "Creation Successful";
+            response.Id = leaveType.Id;
+            return response;
         }
     }
 }
