@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HrLeaveManagement.Application.Contracts.Persistence;
 using HrLeaveManagement.Application.DTOs.LeaveAllocation;
 using HrLeaveManagement.Application.Features.LeaveAllocations.Requests.Queries;
 using HrLeaveManagement.Application.Persistence.Contracts;

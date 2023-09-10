@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using HrLeaveManagement.Application.Features.LeaveAllocations.Requests.Commands;
+using HrLeaveManagement.Application.Contracts.Persistence;
 
 namespace HrLeaveManagement.Application.Features.LeaveAllocations.Handlers.Commands
 {

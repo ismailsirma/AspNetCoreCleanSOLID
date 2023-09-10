@@ -10,6 +10,7 @@ using System.Threading;
 using HrLeaveManagement.Application.DTOs.LeaveAllocation.Validators;
 using HrLeaveManagement.Application.Features.LeaveAllocations.Requests.Commands;
 using HrLeaveManagement.Application.Exceptions;
+using HrLeaveManagement.Application.Contracts.Persistence;
 
 namespace HrLeaveManagement.Application.Features.LeaveAllocations.Handlers.Commands
 {
