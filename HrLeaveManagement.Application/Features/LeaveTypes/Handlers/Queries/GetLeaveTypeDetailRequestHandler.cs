@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using HrLeaveManagement.Application.DTOs.LeaveType;
 using HrLeaveManagement.Application.Features.LeaveTypes.Requests.Queries;
-using HrLeaveManagement.Application.Persistence.Contracts;
+using HrLeaveManagement.Application.Contracts.Persistence;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

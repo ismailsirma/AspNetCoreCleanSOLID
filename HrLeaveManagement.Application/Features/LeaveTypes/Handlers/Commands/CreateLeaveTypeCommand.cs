@@ -1,21 +1,18 @@
 ﻿using AutoMapper;
 using HrLeaveManagement.Application.DTOs.LeaveType.Validators;
-using HrLeaveManagement.Application.Exceptions;
 using HrLeaveManagement.Application.Features.LeaveRequests.Requests.Commands;
-using HrLeaveManagement.Application.Persistence.Contracts;
+using HrLeaveManagement.Application.Contracts.Persistence;
 using HrLeaveManagement.Application.Responses;
 using HrLeaveManagement.Domain;
 using MediatR;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 
 namespace HrLeaveManagement.Application.Features.LeaveTypes.Handlers.Commands
 {
-    public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeCommand, BaseCommandResponse>
+    public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveRequestCommand, BaseCommandResponse>
     {
         private readonly ILeaveTypeRepository _leaveTypeRepository;
         private readonly IMapper _mapper;
@@ -24,11 +21,11 @@ namespace HrLeaveManagement.Application.Features.LeaveTypes.Handlers.Commands
             _leaveTypeRepository = leaveTypeRepository;
             _mapper = mapper;
         }
-        public async Task<BaseCommandResponse> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(CreateLeaveRequestCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
             var validator = new CreateLeaveTypeDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.LeaveTypeDto);
+            var validationResult = await validator.ValidateAsync(request.LeaveRequestDto);
             
             if (validationResult.IsValid == false)
             {

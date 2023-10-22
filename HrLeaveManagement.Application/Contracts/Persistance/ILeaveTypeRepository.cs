@@ -1,11 +1,6 @@
-﻿using HrLeaveManagement.Application.Contracts.Persistence;
-using HrLeaveManagement.Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HrLeaveManagement.Domain;
 
-namespace HrLeaveManagement.Application.Persistence.Contracts
+namespace HrLeaveManagement.Application.Contracts.Persistence
 {
     public interface ILeaveTypeRepository : IGenericRepository<LeaveType>
     {
