@@ -13,7 +13,7 @@ namespace HR.LeaveManagement.Persistence
 {
     public static class InfrastructureServicesRegistration
     {
-        public static IServiceCollection ConfigurePersistenceServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
             services.AddTransient<IEmailSender, EmailSender>();

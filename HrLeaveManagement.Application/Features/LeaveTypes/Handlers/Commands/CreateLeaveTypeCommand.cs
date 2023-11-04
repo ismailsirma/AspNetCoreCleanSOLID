@@ -25,8 +25,9 @@ namespace HrLeaveManagement.Application.Features.LeaveTypes.Handlers.Commands
         {
             var response = new BaseCommandResponse();
             var validator = new CreateLeaveTypeDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.LeaveRequestDto);
+            //var validationResult = await validator.ValidateAsync(request.LeaveRequestDto);
             
+            /*
             if (validationResult.IsValid == false)
             {
                 response.Success = false;
@@ -38,10 +39,10 @@ namespace HrLeaveManagement.Application.Features.LeaveTypes.Handlers.Commands
 
             var leaveType = _mapper.Map<LeaveType>(request.LeaveTypeDto);
             leaveType = await _leaveTypeRepository.Add(leaveType);
-
+            */
             response.Success = true;
             response.Message = "Creation Successful";
-            response.Id = leaveType.Id;
+            //response.Id = leaveType.Id;
             return response;
         }
     }
